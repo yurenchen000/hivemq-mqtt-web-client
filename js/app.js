@@ -23,8 +23,10 @@ var websocketclient = {
     'subscriptions': [],
     'messages': [],
     'connected': false,
+    'connect_callback': null,
 
-    'connect': function () {
+    'connect': function (callback) {
+        websocketclient.connect_callback = callback;   //chen custom conn callback
 
         var host = $('#urlInput').val();
         var port = parseInt($('#portInput').val(), 10);
@@ -73,6 +75,13 @@ var websocketclient = {
         websocketclient.connected = true;
         console.log("connected");
         var body = $('body').addClass('connected').removeClass('notconnected').removeClass('connectionbroke');
+
+        var ret = true;
+        // chen custom conn callback
+        if(typeof websocketclient.connect_callback == 'function')
+            ret = websocketclient.connect_callback();
+        if(ret == false)
+            return;
 
         websocketclient.render.hide('conni');
         websocketclient.render.show('publish');
@@ -145,6 +154,7 @@ var websocketclient = {
     },
 
     'subscribe': function (topic, qosNr, color) {
+        console.log('ui subscribe:', topic, qosNr, color);
 
         if (!websocketclient.connected) {
             websocketclient.render.showError("Not connected");
