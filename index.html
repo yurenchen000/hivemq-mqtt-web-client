@@ -45,7 +45,8 @@ limitations under the License.
 <div id="connection" class="row large-12 columns">
 
     <div class="large-8 columns conniTop">
-        <h3>Connection</h3>
+        <h3 id='conn_title'>Connection</h3>
+        <h6 id="conn_info"></h6>
     </div>
 
     <div class="large-1 columns conniStatus">
@@ -183,7 +184,7 @@ limitations under the License.
                         <div class="row">
                             <div class="large-12 columns">
                                 <label>Message</label>
-                                <textarea id="publishPayload"></textarea>
+                                <textarea id="publishPayload">hello 123</textarea>
                             </div>
                         </div>
                     </form>
@@ -328,7 +329,7 @@ limitations under the License.
 
         $('#urlInput').val(websocketserver);
         $('#portInput').val(websocketport);
-        $('#clientIdInput').val('clientId-' + randomString(4));
+        $('#clientIdInput').val('JS_CCC-' + randomString(4));
 
         $('#colorChooser').minicolors();
 
@@ -339,10 +340,13 @@ limitations under the License.
             }
         });
 
-        websocketclient.render.toggle('publish');
-        websocketclient.render.toggle('messages');
-        websocketclient.render.toggle('sub');
+        // websocketclient.render.toggle('publish');
+        // websocketclient.render.toggle('messages');
+        // websocketclient.render.toggle('sub');
 
+        websocketclient.render.hide('publish');
+        websocketclient.render.hide('messages');
+        websocketclient.render.hide('sub');
 
         // not auto_conn if '?auto=0'
         var url = new URLSearchParams(window.location.search)
@@ -359,6 +363,12 @@ limitations under the License.
             // websocketclient.render.show('publish');
             websocketclient.render.show('sub');
             websocketclient.render.show('messages');
+
+            var server_url = 'ws:'+websocketclient.client.host + ':' + websocketclient.client.port;
+            var client_id = websocketclient.client.clientId;
+            $('#conn_title').html(client_id);
+            $('#conn_info').html(server_url);
+
             return false;
         });
         
