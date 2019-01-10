@@ -63,12 +63,12 @@ limitations under the License.
                 <form class="custom">
                     <div class="large-5 columns">
                         <label>Host *</label>
-                        <input id="urlInput" type="text" value="broker.mqttdashboard.com">
+                        <input id="urlInput" type="text" value="10.1.1.30">
                     </div>
 
                     <div class="large-1 columns">
                         <label>Port *</label>
-                        <input id="portInput" type="text" value="8000"/>
+                        <input id="portInput" type="text" value="9001"/>
                     </div>
 
                     <div class="large-4 columns">
@@ -161,13 +161,13 @@ limitations under the License.
                         <div class="row">
                             <div class="large-6 columns">
                                 <label>Topic</label>
-                                <input id="publishTopic" type="text" value="testtopic/1">
+                                <input id="publishTopic" type="text" value="test/1">
                             </div>
                             <div class="large-2 columns">
                                 <label for="publishQoSInput">QoS</label>
                                 <select id="publishQoSInput" class="small">
                                     <option>0</option>
-                                    <option>1</option>
+                                    <option selected="selected">1</option>
                                     <option>2</option>
                                 </select>
                             </div>
@@ -260,7 +260,7 @@ limitations under the License.
                                         <label for="QoSInput">QoS</label>
                                         <select id="QoSInput" class="small">
                                             <option>2</option>
-                                            <option>1</option>
+                                            <option selected="selected">1</option>
                                             <option>0</option>
                                         </select>
                                     </div>
@@ -272,7 +272,7 @@ limitations under the License.
                                 <div class="row large-12 columns">
                                     <div class="large-12 columns">
                                         <label>Topic</label>
-                                        <input id="subscribeTopic" type="text" value="testtopic/#">
+                                        <input id="subscribeTopic" type="text" value="test/#">
                                     </div>
                                 </div>
                             </form>
@@ -302,13 +302,22 @@ limitations under the License.
 <script src="js/mqttws31.js"></script>
 <script src="js/encoder.js"></script>
 <script src="js/app.js"></script>
+<!-- 
 <script src="config.js"></script>
+ -->
 
 <script>
 
+    // default server
+    var websocketserver = '10.1.1.30';
+    var websocketport = 9001;
+
+    // funcs ----
+
     function randomString(length) {
         var text = "";
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        // var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        var possible = "0123456789";
         for (var i = 0; i < length; i++)
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         return text;
@@ -319,7 +328,7 @@ limitations under the License.
 
         $('#urlInput').val(websocketserver);
         $('#portInput').val(websocketport);
-        $('#clientIdInput').val('clientId-' + randomString(10));
+        $('#clientIdInput').val('clientId-' + randomString(4));
 
         $('#colorChooser').minicolors();
 
