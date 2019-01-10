@@ -342,6 +342,26 @@ limitations under the License.
         websocketclient.render.toggle('publish');
         websocketclient.render.toggle('messages');
         websocketclient.render.toggle('sub');
+
+
+        // not auto_conn if '?auto=0'
+        var url = new URLSearchParams(window.location.search)
+        var auto_conn = url.get('auto')
+        if(auto_conn == '0')
+            return;
+
+        // chen init: auto conn for event sub
+        websocketclient.connect(function(){
+            websocketclient.subscribe('test/#', 1, '2b2fd3');
+            
+            websocketclient.render.hide('conni');
+            websocketclient.render.hide('publish');
+            // websocketclient.render.show('publish');
+            websocketclient.render.show('sub');
+            websocketclient.render.show('messages');
+            return false;
+        });
+        
     });
 </script>
 </body>
