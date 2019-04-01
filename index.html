@@ -335,6 +335,7 @@ limitations under the License.
         var port = url.get('o')
         var user = url.get('u')
         var pass = url.get('p')
+        var topic = url.get('t')
 
 		host = host || websocketserver;
 		port = port || websocketport;
@@ -372,6 +373,8 @@ limitations under the License.
         websocketclient.connect(function(){
             websocketclient.subscribe('test/#', 1, '2b2fd3');
             websocketclient.subscribe('+/event/#', 1, '12e683');
+            if(topic)
+			websocketclient.subscribe(topic, 1, 'e0e010');
             
             websocketclient.render.hide('conni');
             websocketclient.render.hide('publish');
