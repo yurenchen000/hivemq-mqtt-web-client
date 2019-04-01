@@ -327,8 +327,23 @@ limitations under the License.
     $(document).foundation();
     $(document).ready(function () {
 
-        $('#urlInput').val(websocketserver);
-        $('#portInput').val(websocketport);
+		// -------- url params
+        var url = new URLSearchParams(window.location.search)
+        var auto_conn = url.get('auto')
+		// host,port, user,pass
+        var host = url.get('h')
+        var port = url.get('o')
+        var user = url.get('u')
+        var pass = url.get('p')
+
+		host = host || websocketserver;
+		port = port || websocketport;
+
+        $('#urlInput').val(host);
+        $('#portInput').val(port);
+        $('#userInput').val(user);
+        $('#pwInput').val(pass);
+
         $('#clientIdInput').val('JS_CCC-' + randomString(4));
 
         $('#colorChooser').minicolors();
@@ -349,10 +364,9 @@ limitations under the License.
         websocketclient.render.hide('sub');
 
         // not auto_conn if '?auto=0'
-        var url = new URLSearchParams(window.location.search)
-        var auto_conn = url.get('auto')
         if(auto_conn == '0')
             return;
+
 
         // chen init: auto conn for event sub
         websocketclient.connect(function(){
